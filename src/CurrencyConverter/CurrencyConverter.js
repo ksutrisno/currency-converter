@@ -83,7 +83,9 @@ class CurrencyConverter extends Component
           this.setState({currency:event.value});
     }
 
-    createNewCurrencyBox()
+    
+
+    addNewCurrency()
     {    
         if(this.state.rates[this.state.currency] != null)
         {
@@ -137,7 +139,7 @@ class CurrencyConverter extends Component
                  ( <div className = "dropdown">  
                  <SelectSearch className = "select-search-box" options={options} value={this.state.currency} placeholder="Select Currency" 
                     onChange = {this.handleNewCurrency}  /> 
-                     <button className ="submit-button" onClick = {()=>this.createNewCurrencyBox()}>Submit </button>
+                     <button className ="submit-button" onClick = {()=>this.addNewCurrency()}>Submit </button>
                      </div>)  : 
                  (<button className ="add-button" onClick = {()=>this.showForm(true)}>(+) Add new currency</button>)
                 }
