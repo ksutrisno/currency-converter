@@ -259,6 +259,8 @@ body {
     border-width: 1px;
 }
 
-input {
-        text-align: right;
-  }
+input 
+{   
+    width: 125px;
+     text-align: right;
+}

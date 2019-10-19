@@ -2,30 +2,10 @@ import React, {Component} from 'react';
 
 import './CurrencyConverter.css';
 import SelectSearch from 'react-select-search'
-
+import CurrencyBox from './CurrencyBox';
 
 
 const options = [];
-
-function ShowCurrencyList(props)
-{
-    const list = props.currencyList.map((item) => {
-        return <div className = "currency-box" key= {item.id}>
-            <div className ="currency-info">             
-                <div className = "currency-abb"><b>{item.id}</b></div> 
-                <div className = "currency-name">{props.base} - {item.id}</div> 
-                <div className = "currency-conversion">1 {props.base}= {item.id} {item.conversionRate.toFixed(3)}</div> 
-            </div>
-            <div className = "currency-amount"> <b>{ (props.value * item.conversionRate).toFixed(3)}</b> </div>
-            <button className ="remove-button" onClick = {props.handleDelete.bind(null, item)}>(-)</button>
-         </div>
-    })
-    return (
-        <div className = "currency-converter">
-            {list}
-        </div>
-    );
-}
 
 class CurrencyConverter extends Component
 {
@@ -67,6 +47,9 @@ class CurrencyConverter extends Component
                 options.push(newElement);
             }
 
+            this.addNewCurrency('JPY');
+            this.addNewCurrency('IDR');
+            this.addNewCurrency('GBP');
       }
 
     handleBaseChange(event) {
@@ -84,10 +67,16 @@ class CurrencyConverter extends Component
     }
 
     
-
-    addNewCurrency()
+    addNewCurrency(id)
     {    
-        if(this.state.rates[this.state.currency] != null)
+        if(id != null)
+        {
+            var newElement = {};
+            newElement['id'] = id;
+            newElement['conversionRate'] = this.state.rates[id];
+            this.state.currencyList.push(newElement);  
+        }
+        else if(this.state.rates[this.state.currency] != null)
         {
             var newElement = {};
             newElement['id'] = this.state.currency;
@@ -127,13 +116,15 @@ class CurrencyConverter extends Component
                 <div>
                     <form className = "base-currency"  onSubmit={e => { e.preventDefault(); }} >
                         <label>
-                            <b>USD</b>                       
+                            <i>United States Dollar</i>
+                            <br></br>   
+                            <b>USD</b>                    
                         </label>
                         <input type="text" placeholder= {this.state.value} onChange={this.handleBaseChange} />
                     </form>
                 </div>
               
-                <ShowCurrencyList handleDelete = {this.handleDelete.bind(this)} base = {this.state.base}  value = {this.state.value} currencyList = {this.state.currencyList}/>
+                <CurrencyBox handleDelete = {this.handleDelete.bind(this)} base = {this.state.base}  value = {this.state.value} currencyList = {this.state.currencyList}/>
                         
                 {isFormActive ? 
                  ( <div className = "dropdown">  
