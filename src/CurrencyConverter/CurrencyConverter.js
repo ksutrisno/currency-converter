@@ -149,8 +149,6 @@ class CurrencyConverter extends Component
 }
 
 
-  
- 
 
 export default CurrencyConverter;
 
